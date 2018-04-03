@@ -14,6 +14,8 @@ import Market from './Market';
 import Sell from './Sell';
 import auth from './auth';
 import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +27,7 @@ class App extends Component {
 
   render() {
     return (
+      <MuiThemeProvider>
       <Router>
         <div>
           <Navigation />
@@ -49,6 +52,7 @@ class App extends Component {
           </Switch>
         </div>
       </Router>
+      </MuiThemeProvider>
     );
   }
 }

@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import Page from './Page';
 
 class Market extends Component {
 
   render() {
     return (
-      <h1>Market</h1>
+      <Page>
+	      <h1>Market</h1>
+	  </Page>
     );
   }
 }
