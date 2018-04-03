@@ -13,8 +13,6 @@ import Exchange from './Exchange';
 import Sell from './Sell';
 import auth from './auth';
 import './App.css';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 
 class App extends Component {
   render() {
