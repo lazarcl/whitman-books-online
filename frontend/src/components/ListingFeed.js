@@ -15,11 +15,13 @@ class ListingFeed extends Component {
   }
 
   render() {
-    const { listingList } = this.props;
+    const { listingList, bookTitle, bookAuthor } = this.props;
     const loading = !Object.keys(listingList).length;
 
     return (
-      <Feed loading={loading} feedList={listingList} FeedItem={ListingItem} />
+      <div>
+        <Feed loading={loading} feedList={listingList} FeedItem={ListingItem} bookTitle={bookTitle} bookAuthor={bookAuthor}/>
+      </div>
     );
   }
 }
