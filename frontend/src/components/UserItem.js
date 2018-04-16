@@ -156,19 +156,4 @@ class UserItem extends Component {
   }
 }
 
-// <FlatButton style={{padding: '0px'}}
-//   icon={<i className="material-icons">assignment</i>}
-//   label="Copy"
-//   labelPosition="after"
-//   onClick={this.copyToClipboard(emailBody)}
-// />
-
-
-
-// const mapStateToProps = (state) => {
-//   const { profileObj } = state.authReducer;
-//   return { profileObj };
-// };
-
-// export default withRouter(connect(mapStateToProps)(UserItem));
 export default UserItem;

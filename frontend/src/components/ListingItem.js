@@ -41,11 +41,6 @@ class ListingItem extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   const { profileObj } = state.authReducer;
-//   return { profileObj };
-// };
-
 const makeMapStateToProps = () => {
   const getUserById = makeGetUserById();
   const mapStateToProps = (state, props) => {
