@@ -13,6 +13,8 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Popover from 'material-ui/Popover';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
+
 
 
 const { USER_DATA } = sampleData;
@@ -23,28 +25,59 @@ class UserItem extends Component {
     super(props);
 
     this.state = {
-      open: false,
+      autoHideDuration: 1000,
+      message: 'Copied to the clipboard',
+      snackBarOpen: false,
+      popoverOpen: false,
     };
   }
 
 
-  handleClick = (event) => {
+  handlePopoverClick = (event) => {
     // This prevents ghost click.
     event.preventDefault();
 
     this.setState({
-      open: true,
+      popoverOpen: true,
       anchorEl: event.currentTarget,
     });
   };
 
-  handleRequestClose = () => {
+  handlePopoverRequestClose = () => {
     this.setState({
-      open: false,
+      popoverOpen: false,
     });
   };
 
 
+  handleSnackBarClick = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+    this.setState({
+      snackBarOpen: true,
+    });
+  };
+
+  handleSnackBarRequestClose = () => {
+    this.setState({
+      snackBarOpen: false,
+    });
+  };
+
+
+  copyToClipboard = (input) => {
+    const el = document.createElement('textarea');
+    el.value = input;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+  };
+
+  handleCopyClick = (event, input) => {
+    this.handleSnackBarClick(event);
+    this.copyToClipboard(input);
+  };
 
 
   render() {
@@ -65,17 +98,17 @@ class UserItem extends Component {
       {(profileObj.googleId === googleId) 
         ?
         <CardActions>
-          <RaisedButton label="Delete My Listing" secondary={true} onClick={this.handleClick}/>
+          <RaisedButton label="Delete My Listing" secondary={true} />
         </CardActions>
         :
-        <CardActions>
-          <RaisedButton label="Contact Seller" primary={true} onClick={this.handleClick}/>
+        <CardActions style={{"padding-left":"0px"}}>
+          <RaisedButton label="Contact Seller" primary={true} onClick={this.handlePopoverClick}/>
           <Popover
-            open={this.state.open}
+            open={this.state.popoverOpen}
             anchorEl={this.state.anchorEl}
             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            onRequestClose={this.handleRequestClose}
+            onRequestClose={this.handlePopoverRequestClose}
           >
             <div>
               <h3 style={{padding:'5px', margin: '5px'}}> Great! Send them an email </h3>
@@ -88,11 +121,13 @@ class UserItem extends Component {
                 onFocus={(event) => event.target.select()}
               />
               <FlatButton style={{padding: '0px'}}
-                icon={<i class="material-icons">assignment</i>}
+                icon={<i className="material-icons">assignment</i>}
                 label="Copy"
                 labelPosition="after"
+                onClick={ (event) => {this.handleCopyClick(event, email)} }
               />
               <br />
+
               <TextField
                 readOnly
                 defaultValue={emailBody}
@@ -101,11 +136,18 @@ class UserItem extends Component {
                 onFocus={(event) => event.target.select()}
               />
               <FlatButton style={{padding: '0px'}}
-                icon={<i class="material-icons">assignment</i>}
+                icon={<i className="material-icons">assignment</i>}
                 label="Copy"
                 labelPosition="after"
+                onClick={ (event) => {this.handleCopyClick(event, emailBody)} }
               />
               <br />
+              <Snackbar
+                open={this.state.snackBarOpen}
+                message={this.state.message}
+                autoHideDuration={this.state.autoHideDuration}
+                onRequestClose={this.handleSnackBarRequestClose}
+              />
           </div>
           </Popover>
         </CardActions>}
@@ -113,6 +155,15 @@ class UserItem extends Component {
     );
   }
 }
+
+// <FlatButton style={{padding: '0px'}}
+//   icon={<i className="material-icons">assignment</i>}
+//   label="Copy"
+//   labelPosition="after"
+//   onClick={this.copyToClipboard(emailBody)}
+// />
+
+
 
 // const mapStateToProps = (state) => {
 //   const { profileObj } = state.authReducer;
