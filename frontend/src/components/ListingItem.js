@@ -10,13 +10,6 @@ import Loader from './Loader';
 import {Card, CardHeader} from 'material-ui/Card';
 
 
-
-const { USER_DATA } = sampleData;
-
-
-
-
-
 class ListingItem extends Component {
 
   componentDidMount() {

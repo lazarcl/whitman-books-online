@@ -9,7 +9,7 @@ class BookItem extends Component {
       <div>
         <h3>{title}</h3>
         <h4>{author}</h4>
-        <ListingFeed listingIds={listingIds} bookTitle={title} bookAuthor={author}/>
+        <ListingFeed listingIds={listingIds} />
         <hr />
       </div>
     );
