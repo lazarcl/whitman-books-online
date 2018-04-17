@@ -90,7 +90,7 @@ class Sell extends Component {
 
   handleIsbnEnterKey = (e) => {
     // console.log(`Pressed keyCode ${ev.key}`);
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && this.state.isbnButtonDisabled === false) {
       this.handleIsbnClick(e);
     }
   }
