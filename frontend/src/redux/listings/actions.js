@@ -53,7 +53,7 @@ export function loadListingList(boolean) {
 }
 
 export function deleteListing(listingId) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const urlDest = `${LISTING_ENDPOINT}${listingId}`;
     const requestIds = new XMLHttpRequest();
     requestIds.open('DELETE', urlDest);
