@@ -8,6 +8,11 @@ import MenuItem from 'material-ui/MenuItem';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Page from './Page';
 import Loader from './Loader';
+import authReducer from '../redux/auth/reducer';
+import { Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 
 class Sell extends Component {
   constructor(props) {
@@ -23,8 +28,11 @@ class Sell extends Component {
       isbnButtonDisabled: true,
       priceButtonDisabled: true,
       loading: false,
+
     };
   }
+
+
 
   handleIsbnChange = (event) => {
     const isbnValue = event.target.value;
@@ -66,16 +74,12 @@ class Sell extends Component {
     }
   }
 
-  handleSubmitClick = (e) => {
-    console.log("Temp handling: Clicked Submit Button");
-  }
 
   handleIsbnClick = (e) => {
     e.preventDefault();
     this.setState({ loading: true });
     isbn.resolve(this.state.isbnValue, (err, book) => {
       if (err) {
-        console.log('Book not found', err);
         this.setState({
           loading: false,
         });
@@ -101,6 +105,39 @@ class Sell extends Component {
     }
   }
 
+
+  handleSubmitClick = (e) => {
+    e.preventDefault();
+    //BOOK TO BACKEND
+    //${this.state.book.industryIdentifiers[0].identifier}
+    const requestURL = `http://127.0.0.1:5000/book/${this.state.isbnValue}`;
+    const request = new XMLHttpRequest();
+    request.open('POST', requestURL);
+    request.responseType = "json";
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(this.state.book));
+    request.onload = function () {
+      const bookData = request.response;
+    }
+
+    //LISTING TO BACKEND
+    const i = this.state.book.industryIdentifiers.length - 1;
+    const requestURL2 = `http://127.0.0.1:5000/listing/${this.state.book.industryIdentifiers[i].identifier}`;
+    const request2 = new XMLHttpRequest();
+    request2.open('POST', requestURL2);
+    request2.responseType = "json";
+    request2.setRequestHeader("Content-Type", "application/json");
+    const body = JSON.stringify({
+      price: parseFloat(this.state.price),
+      condition: this.state.condition,
+      status: "selling",
+      google_tok: this.props.googleId,
+    });
+    request2.send(body);
+    request2.onload = function () {
+      const listingData = request2.reponse;
+    }
+  }
 
   render() {
     const { loading, book } = this.state;
@@ -156,9 +193,9 @@ class Sell extends Component {
               value={this.state.condition}
               onChange={this.handleConditionChange}
             >
-              <MenuItem value="Poor" primaryText="Poor" />
-              <MenuItem value="Used" primaryText="Used" />
-              <MenuItem value="Like New" primaryText="Like new" />
+              <MenuItem value="Bad" primaryText="Bad" />
+              <MenuItem value="Ehh" primaryText="Ehh" />
+              <MenuItem value="Good" primaryText="Good" />
               <MenuItem value="New" primaryText="New" />
             </SelectField>
 
@@ -188,5 +225,9 @@ class Sell extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  const { googleId } = state.authReducer.profileObj;
+  return { googleId };
+};
 
-export default Sell;
+export default withRouter(connect(mapStateToProps)(Sell));
