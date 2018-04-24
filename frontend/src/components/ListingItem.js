@@ -13,7 +13,7 @@ import './ListingItem.css';
 
 class ListingItem extends Component {
   render() {
-    const { price, condition, userId, user, profileObj } = this.props;
+    const { price, condition, userId, user, profileObj, listing_id } = this.props;
 
     return (
       <Paper style={{ margin: '1vh' }}>
@@ -27,7 +27,7 @@ class ListingItem extends Component {
           </div>
         </div>
         <div style={{ 'paddingTop': '1vh', 'paddingLeft': '1vh' }}>
-          <UserItem user={user} profileObj={profileObj} />
+          <UserItem user={user} profileObj={profileObj} listingId={listing_id} />
         </div>
       </Paper>
     );

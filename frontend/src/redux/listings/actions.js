@@ -28,6 +28,15 @@ export function getListingListSuccess(listingList) {
   };
 }
 
+export function deleteListingListSuccess(listingId) {
+  return {
+    type: 'DELETE_LISTING_LIST_SUCCESS',
+    payload: {
+      listingId,
+    },
+  };
+}
+
 export function getListingListFail() {
   return {
     type: 'GET_LISTING_LIST_FAIL',
@@ -40,6 +49,19 @@ export function loadListingList(boolean) {
     payload: {
       boolean,
     },
+  };
+}
+
+export function deleteListing(listingId) {
+  return (dispatch, getState) => {
+    const urlDest = `${LISTING_ENDPOINT}${listingId}`;
+    const requestIds = new XMLHttpRequest();
+    requestIds.open('DELETE', urlDest);
+    requestIds.responseType = "json";
+    requestIds.send(urlDest);
+    requestIds.onload = () => {
+      dispatch(deleteListingListSuccess(listingId));
+    };
   };
 }
 
