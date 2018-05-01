@@ -12,6 +12,8 @@ import authReducer from '../redux/auth/reducer';
 import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Snackbar from 'material-ui/Snackbar';
+
 
 
 class Sell extends Component {
@@ -28,11 +30,32 @@ class Sell extends Component {
       isbnButtonDisabled: true,
       priceButtonDisabled: true,
       loading: false,
+      snackBarOpen: false,
+      autoHideDuration: 8000,
+      snackMessage: 'Your listing has been added! You can remove it in your profile page.',
 
     };
   }
 
 
+  clearListingFields = () => {
+    this.setState({
+      isbnValue: '',
+      book: null,
+      condition: '',
+      price: '',
+      priceError: '',
+      isbnError: '',
+      isbnButtonDisabled: true,
+      priceButtonDisabled: true,
+    });
+  }
+
+  handleSnackBarRequestClose = () => {
+    this.setState({
+      snackBarOpen: false,
+    });
+  };
 
   handleIsbnChange = (event) => {
     const isbnValue = event.target.value;
@@ -138,6 +161,10 @@ class Sell extends Component {
     request2.onload = function () {
       const listingData = request2.reponse;
     }
+    this.clearListingFields();
+    this.setState({
+      snackBarOpen: true,
+    });
   }
 
   render() {
@@ -221,6 +248,12 @@ class Sell extends Component {
             />
           </div>
         }
+        <Snackbar
+          open={this.state.snackBarOpen}
+          message={this.state.snackMessage}
+          autoHideDuration={this.state.autoHideDuration}
+          onRequestClose={this.handleSnackBarRequestClose}
+        />
       </Page>
     );
   }
