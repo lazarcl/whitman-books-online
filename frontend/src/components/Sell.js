@@ -13,6 +13,8 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Snackbar from 'material-ui/Snackbar';
+import './Sell.css'
+import logo from './logo.png';
 
 
 
@@ -229,7 +231,7 @@ class Sell extends Component {
 
             <br />
 
-            $
+            $&nbsp;
             <TextField
               floatingLabelText="Input your desired price:"
               value={this.state.price}
