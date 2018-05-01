@@ -110,7 +110,8 @@ class Sell extends Component {
     e.preventDefault();
     //BOOK TO BACKEND
     //${this.state.book.industryIdentifiers[0].identifier}
-    const requestURL = `http://127.0.0.1:5000/book/${this.state.isbnValue}`;
+    const strippedIsbn = this.state.isbnValue.replace(/\D/g,'');
+    const requestURL = `http://127.0.0.1:5000/book/${strippedIsbn}`;
     const request = new XMLHttpRequest();
     request.open('POST', requestURL);
     request.responseType = "json";
