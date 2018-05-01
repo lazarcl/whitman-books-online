@@ -164,8 +164,12 @@ class UserItem extends Component {
   }
 }
 
+const mapStateToProps = (state, props) => {
+  return {
+  };
+};
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ deleteListing }, dispatch);
 
-export default withRouter(connect(mapDispatchToProps)(UserItem));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserItem));
