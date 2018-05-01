@@ -33,7 +33,7 @@ class Sell extends Component {
       priceButtonDisabled: true,
       loading: false,
       snackBarOpen: false,
-      autoHideDuration: 8000,
+      autoHideDuration: 3000,
       snackMessage: 'Your listing has been added! You can remove it in your profile page.',
 
     };
